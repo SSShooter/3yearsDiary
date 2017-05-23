@@ -1,0 +1,26 @@
+{
+  "name": "three-years-diary",
+  "version": "0.0.1",
+  "description": "three year diary app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssshooter/3yearsDiary.git"
+  },
+  "keywords": [
+    "diary",
+    "hybirdapp\u001b[D\u001b[D\u001b[D-"
+  ],
+  "author": "ssshooter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ssshooter/3yearsDiary/issues"
+  },
+  "homepage": "https://github.com/ssshooter/3yearsDiary#readme",
+  "dependencies": {
+    "moment-timezone": "^0.5.13"
+  }
+}
