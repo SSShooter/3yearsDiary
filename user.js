@@ -1,12 +1,11 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://localhost/tydiary');
 var userSchama = mongoose.Schema({
   username: {
     unique: true,
     type: String
   },
   lastupdate: String,
-  leader: String,
   data: {},
   list: [{
     rival: String,
