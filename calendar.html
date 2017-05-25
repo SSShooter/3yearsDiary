@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="iconfont.css">
+  <link rel="stylesheet" type="text/css" href="icon/iconfont.css">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
   <style>
@@ -12,6 +12,12 @@
     html {
       padding: 0;
       margin: 0;
+    }
+    
+    #date {
+      text-align: center;
+      padding: 1rem 0 .5rem 0;
+      font-size: 1.5rem;
     }
   </style>
 </head>
@@ -30,42 +36,58 @@
     <div class="grid">六</div>
     <div class="box"></div>
   </div>
+  <div id="date"></div>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
   <script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
   <script>
     $youziku.load("body", "ff4ee228884d464f9e43deb3549a457a", "Source-Han-Normal");
     var cnmonth = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
-    var thismonth = moment().month();
+    var thismonth = checkmonth = moment().month();
     var date = moment().date();
     var wid = window.screen.width;
     var gridWid = wid / 7 - 1;
     var gridHei = gridWid * 0.618;
     var gridHeiPlus = gridHei / 0.618;
+    var calendarHei = gridHeiPlus + gridHei * 7;
+    $('#calendar').css({
+      height: calendarHei,
+      'text-align': 'center'
+    });
     $('.icon-return').css({
       height: gridHeiPlus,
       width: wid / 5,
       'line-height': gridHeiPlus + 'px',
-      float: 'left',
-      'text-align': 'center'
+      float: 'left'
     });
     $('.icon-enter').css({
       height: gridHeiPlus,
       width: wid / 5,
       'line-height': gridHeiPlus + 'px',
-      float: 'left',
-      'text-align': 'center'
+      float: 'left'
     });
+
+    $('.icon-return').click(function () {
+      if (checkmonth == 0)
+        checkmonth = 12;
+      generate(--checkmonth);
+    });
+    $('.icon-enter').click(function () {
+      if (checkmonth == 11)
+        checkmonth = -1;
+      generate(++checkmonth);
+    });
+
     $('.month').css({
       height: gridHeiPlus,
       width: wid / 5 * 3,
       'line-height': gridHeiPlus + 'px',
-      float: 'left',
-      'text-align': 'center'
+      float: 'left'
     });
-
+    $('#date').click(function () {
+      $('#calendar').slideDown();
+    })
     function generate(month) {
-      console.log(month);
       $('.box').empty();
       if (month == undefined)
         var month = moment().month(month);
@@ -84,20 +106,27 @@
         }
       }
       $('.box > .grid').click(function () {
-        var date = $(this).html(),
-          dayOfYear = moment().month(month).date(date).dayOfYear();
-        console.log(dayOfYear);
+        var date = $(this).html();
+        if (date) {
+          var dayOfYear = moment().month(month).date(date).dayOfYear();
+          console.log(dayOfYear);
+          console.log(month + date);
+          $('#date').html(month + 1 + '月' + date + '日');
+          $('#calendar').slideUp();
+          $.get('',{},function(){
+
+          })
+        }
       });
       $('.grid').css({
         height: gridHei,
         width: gridWid,
         'line-height': gridHei + 'px',
-        float: 'left',
-        'text-align': 'center'
+        float: 'left'
       })
       $('.today').css({
         'background-color': 'rgb(86, 159, 247)',
-        color:'#fff'
+        color: '#fff'
       })
     }
     generate();
