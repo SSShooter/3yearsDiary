@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="iconfont.css">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    body,
+    html {
+      padding: 0;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="calendar">
+    <i class="iconfont icon-return"></i>
+    <div class="month"></div>
+    <i class="iconfont icon-enter"></i>
+    <div class="grid">日</div>
+    <div class="grid">一</div>
+    <div class="grid">二</div>
+    <div class="grid">三</div>
+    <div class="grid">四</div>
+    <div class="grid">五</div>
+    <div class="grid">六</div>
+    <div class="box"></div>
+  </div>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+  <script type="text/javascript" src="http://cdn.webfont.youziku.com/wwwroot/js/wf/youziku.api.min.js"></script>
+  <script>
+    $youziku.load("body", "ff4ee228884d464f9e43deb3549a457a", "Source-Han-Normal");
+    var cnmonth = ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'];
+    var thismonth = moment().month();
+    var date = moment().date();
+    var wid = window.screen.width;
+    var gridWid = wid / 7 - 1;
+    var gridHei = gridWid * 0.618;
+    var gridHeiPlus = gridHei / 0.618;
+    $('.icon-return').css({
+      height: gridHeiPlus,
+      width: wid / 5,
+      'line-height': gridHeiPlus + 'px',
+      float: 'left',
+      'text-align': 'center'
+    });
+    $('.icon-enter').css({
+      height: gridHeiPlus,
+      width: wid / 5,
+      'line-height': gridHeiPlus + 'px',
+      float: 'left',
+      'text-align': 'center'
+    });
+    $('.month').css({
+      height: gridHeiPlus,
+      width: wid / 5 * 3,
+      'line-height': gridHeiPlus + 'px',
+      float: 'left',
+      'text-align': 'center'
+    });
+
+    function generate(month) {
+      console.log(month);
+      $('.box').empty();
+      if (month == undefined)
+        var month = moment().month(month);
+      var moment2 = moment().month(month);
+      var days = moment2.daysInMonth();
+      var start = moment2.date(1).day();
+      $('.month').html(cnmonth[month]);
+      for (var i = 0; i < start; i++) {
+        $('.box').append('<div class="grid"></div>');
+      }
+      for (var i = 1; i <= days; i++) {
+        if (i == date && thismonth == month) {
+          $('.box').append('<div class="grid today">' + i + '</div>');
+        } else {
+          $('.box').append('<div class="grid">' + i + '</div>');
+        }
+      }
+      $('.box > .grid').click(function () {
+        var date = $(this).html(),
+          dayOfYear = moment().month(month).date(date).dayOfYear();
+        console.log(dayOfYear);
+      });
+      $('.grid').css({
+        height: gridHei,
+        width: gridWid,
+        'line-height': gridHei + 'px',
+        float: 'left',
+        'text-align': 'center'
+      })
+      $('.today').css({
+        'background-color': 'rgb(86, 159, 247)',
+        color:'#fff'
+      })
+    }
+    generate();
+
+    $youziku.draw();
+  </script>
+</body>
+
+</html>

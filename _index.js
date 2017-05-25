@@ -55,24 +55,16 @@ app.get('/', function (req, res) {
     });
 });
 
-app.get('/read', function (req, res) {
+app.get('/writed', function (req, res) {
     //请求文章内容
 });
 
-app.get('/write', function (req, res) {
+app.get('/unwrite', function (req, res) {
     //写作页面
 });
 
-app.post('/submit', function (req, res) {
+app.post('/post', function (req, res) {
     //发表
-});
-
-app.post('/calendar', function (req, res) {
-    //日历
-});
-
-app.post('/history', function (req, res) {
-    //历史
 });
 
 http.listen(80, function () {
