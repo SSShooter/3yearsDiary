@@ -33,7 +33,7 @@ app.get('/', function (req, res) {
     });
     var Promise = query.exec();
     Promise.then(function (doc) {
-        if(doc.lastupdate == today){
+        if (doc.lastupdate == today) {
             res.send('你今天写过了');
             return;
         }
@@ -47,10 +47,29 @@ app.get('/', function (req, res) {
         doc.lastupdate = today;
         console.log(doc);
         doc.markModified('data');
-        doc.save(function(err){
+        doc.save(function (err) {
             res.send('保存完了');
         });
-    },function(err){
+    }, function (err) {
+        res.send('出错');
+    });
+});
+
+app.get('/home', function (req, res) {
+    var writed;
+    var query = user.findOne({
+        username: 'bbb'
+    });
+    var Promise = query.exec();
+    Promise.then(function (doc) {
+        if (doc.lastupdate == today) {
+            writed = true;
+        }
+        res.json({
+            writed: writed,
+            data: doc.data
+        })
+    }, function (err) {
         res.send('出错');
     });
 });
